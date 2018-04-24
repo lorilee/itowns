@@ -174,6 +174,7 @@ function executeCommand(command) {
             b3dm: b3dmToMesh,
             pnts: pntsParse,
         };
+
         return Fetcher.arrayBuffer(url, layer.networkOptions).then((result) => {
             if (result !== undefined) {
                 let func;
@@ -187,7 +188,7 @@ function executeCommand(command) {
                 } else if (magic == 'pnts') {
                     func = supportedFormats.pnts;
                 } else {
-                    Promise.reject(`Unsupported magic code ${magic}`);
+                    return Promise.reject(`Unsupported magic code ${magic}`);
                 }
                 if (func) {
                     // TODO: request should be delayed if there is a viewerRequestVolume
@@ -203,13 +204,11 @@ function executeCommand(command) {
                 }
             }
             tile.traverse(setLayer);
-            return tile;
+            return Promise.resolve(tile);
         });
     } else {
-        return new Promise((resolve) => {
-            tile.traverse(setLayer);
-            resolve(tile);
-        });
+        tile.traverse(setLayer);
+        return Promise.resolve(tile);
     }
 }
 
