@@ -16,9 +16,6 @@
         <script src="js/loading_screen.js"></script>
         <script src="../dist/debug.js"></script>
         <script type="text/javascript">
-            var exports = {};
-        </script>
-        <script type="text/javascript">
             // # Simple Globe viewer
 
             // Define initial camera position
@@ -58,10 +55,7 @@
             promiseElevation.push(itowns.Fetcher.json('./layers/JSONLayers/WORLD_DTM.json').then(addLayerCb));
             promiseElevation.push(itowns.Fetcher.json('./layers/JSONLayers/IGN_MNT_HIGHRES.json').then(addLayerCb));
 
-            exports.view = globeView;
-            exports.initialPosition = positionOnGlobe;
-
-            exports.loadCollada = function loadCollada(url) {
+            function loadCollada(url) {
                 var model;
                 // loading manager
                 var loadingManager = new itowns.THREE.LoadingManager(function _addModel() {
@@ -98,14 +92,12 @@
                 globeView.controls.setOrbitalPosition({ heading: 180, tilt: 60 });
             });
 
-        </script>
-        <script type="text/javascript">
             var script = document.createElement('script');
             var THREE = itowns.THREE;
             script.type = 'text/javascript';
             script.src = 'https://cdn.rawgit.com/mrdoob/three.js/r' + THREE.REVISION + '/examples/js/loaders/ColladaLoader.js';
             script.onload = function l() {
-                exports.loadCollada('https://raw.githubusercontent.com/iTowns/iTowns2-sample-data/master/models/collada/building.dae');
+                loadCollada('https://raw.githubusercontent.com/iTowns/iTowns2-sample-data/master/models/collada/building.dae');
             };
             document.body.appendChild(script);
         </script>
