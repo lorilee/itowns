@@ -67,7 +67,11 @@ before(async () => {
 
         return result;
     };
-    global.browser = await puppeteer.launch({ headless: !process.env.DEBUG, args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+    global.browser = await puppeteer.launch({
+        executablePath: process.env.CHROME,
+        headless: !process.env.DEBUG,
+        devtools: process.env.DEBUG,
+        args: ['--no-sandbox', '--disable-setuid-sandbox'] });
 });
 
 // close browser and reset global variables
